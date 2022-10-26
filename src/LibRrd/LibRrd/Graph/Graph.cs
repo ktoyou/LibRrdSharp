@@ -71,5 +71,8 @@ public class Graph : IGraph
     }
 #endif
     
+    /// <summary>
+    /// Сгенерировать график.
+    /// </summary>
     public void Render() => new CommandExecutor().ExecuteCommand(RRD.RRD_PATH, new GenerateRrdGraphCommandConfigurator(this));
 }

@@ -1,3 +1,4 @@
+using System.Drawing;
 using LibRrd.Commands;
 using LibRrd.Commands.Configurators;
 using LibRrd.Graph.Interfaces;
@@ -24,6 +25,8 @@ public class Graph : IGraph
 
     public bool Legend { get; set; }
 
+    public string Watermark { get; set; }
+
     public ImgFormat ImgFormat { get; set; }
 
     public DateTime Start { get; set; }
@@ -33,6 +36,10 @@ public class Graph : IGraph
     public List<Def> Defs { get; set; }
     
     public List<Cdef> Cdefs { get; set; }
+
+    public List<Gprint> Gprints { get; set; }
+
+    public List<Comment> Comments { get; set; }
 
     public List<IShape> Shapes { get; set; }
 
@@ -45,11 +52,24 @@ public class Graph : IGraph
         YAxis = true;
         Legend = true;
         XAxis = true;
+        ImgFormat = ImgFormat.Png;
         Defs = new List<Def>();
         Shapes = new List<IShape>();
         Cdefs = new List<Cdef>();
-        ImgFormat = ImgFormat.Png;
+        Gprints = new List<Gprint>();
+        Comments = new List<Comment>();
     }
+
+#if _WINDOWS
+    public Image GetRenderedImage()
+    {
+        using var stream = System.IO.File.Open(File, FileMode.Open);
+        var image = Image.FromStream(stream);
+        stream.Close();
+
+        return image;
+    }
+#endif
     
     public void Render() => new CommandExecutor().ExecuteCommand(RRD.RRD_PATH, new GenerateRrdGraphCommandConfigurator(this));
 }

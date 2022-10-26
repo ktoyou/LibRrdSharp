@@ -2,6 +2,7 @@ using LibRrd.Archive;
 using LibRrd.Commands;
 using LibRrd.Commands.Configurators;
 using LibRrd.DataSources;
+using LibRrd.Graph;
 using LibRrd.Parser;
 
 namespace LibRrd;
@@ -46,4 +47,7 @@ public class RRD
         return RrdInfo.ParseRrdInfo(new RrdParser(command.Output));
     }
     
+    public IDataSource? GetDataSourceByName(string name) => DataSources.FirstOrDefault(ds => ds.GetDsName() == name);
+
+    public IRraArchive? GetRraArchive(RraType rraType) => RraArchives.FirstOrDefault(rra => rra.RraType == rraType);
 }

@@ -1,6 +1,6 @@
 namespace LibRrd.Graph.Interfaces;
 
-public interface ITextLegend
+public interface ILegend
 {
     
 }

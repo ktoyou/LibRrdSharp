@@ -26,7 +26,6 @@ public class CreateRrdCommandConfigurator : ICommandConfigurator
         var command = $"create {_filename} --step {_step}";
         foreach (var ds in _dataSources) command += $" {ds}";
         foreach (var rra in _rraArchives) command += $" {rra}";
-
         return command;
     }
 }

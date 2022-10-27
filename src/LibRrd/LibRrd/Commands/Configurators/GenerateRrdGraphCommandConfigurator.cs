@@ -19,7 +19,7 @@ public class GenerateRrdGraphCommandConfigurator : ICommandConfigurator
         if (_graph.NoGridFit) command += " -N";
         if (!_graph.XAxis) command += " --x-grid none";
         if (!_graph.YAxis) command += " --y-grid none";
-        if (!_graph.Legend) command += " --no-legend";
+        if (!_graph.EnabledLegend) command += " --no-legend";
         if (_graph.Watermark != string.Empty) command += $" --watermark \"{_graph.Watermark}\"";
 
         if (_graph.DefaultFont != null) command += $" {_graph.DefaultFont}";
@@ -28,11 +28,9 @@ public class GenerateRrdGraphCommandConfigurator : ICommandConfigurator
 
         command += $" --imgformat {_graph.ImgFormat.ToString().ToUpper()}";
         
-        _graph.Comments.ForEach(elem => command += $" {elem}");
         _graph.Defs.ForEach(elem => command += $" {elem}");
         _graph.Cdefs.ForEach(elem => command += $" {elem}");
-        _graph.Shapes.ForEach(elem => command += $" {elem}");
-        _graph.Gprints.ForEach(elem => command += $" \"{elem}\"");
+        _graph.Legend.ForEach(elem => command += $" {elem}");
 
         return command;
     }

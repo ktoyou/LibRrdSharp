@@ -4,7 +4,7 @@ using LibRrd.Graph.Interfaces;
 
 namespace LibRrd.Graph;
 
-public class Gprint : ITextLegend
+public class Gprint : ILegend
 {
     private readonly Def _def;
 
@@ -19,5 +19,5 @@ public class Gprint : ITextLegend
         _format = format;
     }
 
-    public override string ToString() => $"GPRINT:{_def.Name}:{_type.ToString()}:{_format}";
+    public override string ToString() => $"GPRINT:{_def.Name}:{_type.ToString()}:\"{_format}\"";
 }

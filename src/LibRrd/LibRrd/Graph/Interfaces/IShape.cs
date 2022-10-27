@@ -2,7 +2,7 @@ using System.Drawing;
 
 namespace LibRrd.Graph.Interfaces;
 
-public interface IShape
+public interface IShape : ILegend
 {
     public Color Color { get; set; }
 

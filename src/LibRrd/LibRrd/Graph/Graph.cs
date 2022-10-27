@@ -23,7 +23,7 @@ public class Graph : IGraph
 
     public bool YAxis { get; set; }
 
-    public bool Legend { get; set; }
+    public bool EnabledLegend { get; set; }
 
     public string Watermark { get; set; }
 
@@ -36,12 +36,8 @@ public class Graph : IGraph
     public List<Def> Defs { get; set; }
     
     public List<Cdef> Cdefs { get; set; }
-
-    public List<Gprint> Gprints { get; set; }
-
-    public List<Comment> Comments { get; set; }
-
-    public List<IShape> Shapes { get; set; }
+    
+    public List<ILegend> Legend { get; set; }
 
     public IFont? TitleFont { get; set; }
 
@@ -56,14 +52,12 @@ public class Graph : IGraph
         Start = start;
         End = end;
         YAxis = true;
-        Legend = true;
+        EnabledLegend = true;
         XAxis = true;
         ImgFormat = ImgFormat.Png;
         Defs = new List<Def>();
-        Shapes = new List<IShape>();
         Cdefs = new List<Cdef>();
-        Gprints = new List<Gprint>();
-        Comments = new List<Comment>();
+        Legend = new List<ILegend>();
     }
 
 #if _WINDOWS

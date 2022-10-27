@@ -1,6 +1,8 @@
+using LibRrd.Graph.Interfaces;
+
 namespace LibRrd.Graph;
 
-public class Comment
+public class Comment : ILegend
 {
     private readonly string _content;
     

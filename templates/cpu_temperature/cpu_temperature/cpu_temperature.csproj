@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="LibRrd">
+        <HintPath>..\..\..\src\LibRrd\LibRrd\bin\Debug\net6.0\LibRrd.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="7.0.0-rc.2.22472.3" />
+      <PackageReference Include="System.Management" Version="7.0.0-rc.2.22472.3" />
+    </ItemGroup>
+
+</Project>

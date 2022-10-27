@@ -30,7 +30,7 @@ public class RRD
         RraArchives = rraArchives;
     }
 
-    public string Dump()
+    public string? Dump()
     {
         var command = new CommandExecutor().ExecuteCommand(RRD_PATH, new DumpRrdConfigurator(FileName));
         return command.Output;

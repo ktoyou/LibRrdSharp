@@ -43,6 +43,12 @@ public class Graph : IGraph
 
     public List<IShape> Shapes { get; set; }
 
+    public IFont? TitleFont { get; set; }
+
+    public IFont? WatermarkFont { get; set; }
+
+    public IFont? DefaultFont { get; set; }
+
     public Graph(int width, int height, DateTime start, DateTime end)
     {
         Height = height;

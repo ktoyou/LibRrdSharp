@@ -4,6 +4,7 @@ using LibRrd;
 using LibRrd.Archive;
 using LibRrd.DataSources;
 using LibRrd.Graph;
+using LibRrd.Graph.Fonts;
 
 
 RRD.RRD_PATH = @"D:\1\rrdtool.exe";
@@ -35,19 +36,23 @@ void RenderGraph()
     var graph = new Graph(800, 360, UnixTimeStampToDateTime(DateTimeOffset.Now.ToUnixTimeSeconds() - 300), DateTime.Now)
     {
         Title = "System Information",
-        File = "cpu.png"
+        File = "cpu.png",
+        Watermark = "Monitoring",
+        TitleFont = new TitleFont("Ubuntu Mono Medium", 110),
+        WatermarkFont = new WatermarkFont("Ubuntu Mono Medium", 20),
+        DefaultFont = new DefaultFont("Ubuntu Mono Medium", 10)
     };
     graph.Defs.Add(new Def(rrd, rrd.GetDataSourceByName("load"), RraType.LAST, "load_def"));
     graph.Cdefs.Add(new Cdef("load_cdef", $"load_def,UN,0,load_def,IF"));
     graph.Shapes.Add(new Line(graph.Defs.First(elem => elem.Name == "load_def"), Color.Brown, 1, "CpuLoad"));
-    graph.Comments.Add(new Comment("\t\t\t\t Cur"));
-    graph.Comments.Add(new Comment("\t\t\tAvg"));
-    graph.Comments.Add(new Comment("\t\t\tMin"));
-    graph.Comments.Add(new Comment("\t\t      Max\\n"));
-    graph.Gprints.Add(new Gprint(graph.Defs.First(elem => elem.Name == "load_def"), RraType.LAST, "%6.2lf"));
-    graph.Gprints.Add(new Gprint(graph.Defs.First(elem => elem.Name == "load_def"), RraType.AVERAGE, "%6.2lf"));
-    graph.Gprints.Add(new Gprint(graph.Defs.First(elem => elem.Name == "load_def"), RraType.MIN, "%6.2lf"));
-    graph.Gprints.Add(new Gprint(graph.Defs.First(elem => elem.Name == "load_def"), RraType.MAX, "%6.2lf"));
+    graph.Comments.Add(new Comment("Cur".PadLeft(35)));
+    graph.Comments.Add(new Comment("Avg".PadLeft(25)));
+    graph.Comments.Add(new Comment("Min".PadLeft(26)));
+    graph.Comments.Add(new Comment("Max\\n".PadLeft(28)));
+    graph.Gprints.Add(new Gprint(graph.Defs.First(elem => elem.Name == "load_def"), RraType.LAST, "%6.2lf %%"));
+    graph.Gprints.Add(new Gprint(graph.Defs.First(elem => elem.Name == "load_def"), RraType.AVERAGE, "%6.2lf %%"));
+    graph.Gprints.Add(new Gprint(graph.Defs.First(elem => elem.Name == "load_def"), RraType.MIN, "%6.2lf %%"));
+    graph.Gprints.Add(new Gprint(graph.Defs.First(elem => elem.Name == "load_def"), RraType.MAX, "%6.2lf %%"));
 
     graph.Render();
 }

@@ -22,13 +22,17 @@ public class GenerateRrdGraphCommandConfigurator : ICommandConfigurator
         if (!_graph.Legend) command += " --no-legend";
         if (_graph.Watermark != string.Empty) command += $" --watermark \"{_graph.Watermark}\"";
 
+        if (_graph.DefaultFont != null) command += $" {_graph.DefaultFont}";
+        if (_graph.TitleFont != null) command += $" {_graph.TitleFont}";
+        if (_graph.WatermarkFont != null) command += $" {_graph.WatermarkFont}";
+
         command += $" --imgformat {_graph.ImgFormat.ToString().ToUpper()}";
         
         _graph.Comments.ForEach(elem => command += $" {elem}");
         _graph.Defs.ForEach(elem => command += $" {elem}");
         _graph.Cdefs.ForEach(elem => command += $" {elem}");
         _graph.Shapes.ForEach(elem => command += $" {elem}");
-        _graph.Gprints.ForEach(elem => command += $" {elem}");
+        _graph.Gprints.ForEach(elem => command += $" \"{elem}\"");
 
         return command;
     }

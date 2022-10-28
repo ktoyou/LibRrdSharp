@@ -43,7 +43,17 @@ public class RRD
     /// <param name="dateTime">Время обновления.</param>
     public void Update(IEnumerable<double> values, DateTime dateTime) => new CommandExecutor().ExecuteCommand(RRD_PATH, new UpdateRrdCommandConfigurator(FileName, values, dateTime));
 
-    
+    /// <summary>
+    /// Получение последних данных об обновлении базы. Возвращает время последнего обновления. Для получения значений,
+    /// нужно обратиться к полю LastValue класса унаследованного от IDataSource 
+    /// </summary>
+    /// <returns></returns>
+    public DateTime LastUpdate()
+    {
+        var command = new CommandExecutor().ExecuteCommand(RRD_PATH, new LastUpdateRrdCommandConfigurator(this));
+        return RrdInfo.ParseRrdInfo(new RrdLastUpdateParser(command.Output, (List<IDataSource>)DataSources));
+    }
+
     /// <summary>
     /// Создание базы данных.
     /// </summary>
@@ -69,7 +79,7 @@ public class RRD
         var command = new CommandExecutor().ExecuteCommand(RRD_PATH, new InfoRrdCommandConfigurator(filename));
         return RrdInfo.ParseRrdInfo(new RrdParser(command.Output));
     }
-    
+
     /// <summary>
     /// Взятие источника данных (DS) по имени.
     /// </summary>

@@ -2,7 +2,7 @@ namespace LibRrd.Parser;
 
 public static class RrdInfo
 {
-    public static RRD ParseRrdInfo(IRrdInfoParser parser)
+    public static T ParseRrdInfo<T>(IParser<T> parser)
     {
         return parser.Parse();
     }

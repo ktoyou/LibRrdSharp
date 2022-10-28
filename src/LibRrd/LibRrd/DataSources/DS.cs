@@ -21,6 +21,8 @@ public class DS : IDataSource
     public float Min => _min;
 
     public float Max => _max;
+
+    public float? LastValue { get; set; }
     
     public DS(string name, DataType type, int heartbeat, float min, float max)
     {
@@ -32,7 +34,7 @@ public class DS : IDataSource
         _min = min;
         _max = max;
     }
-
+    
     public string GetDsName() => _name;
 
     public override string ToString() => $"DS:{_name}:{_dataType.ToString().ToUpper()}:{_heartbeat}:{_min.ToString().Replace(',', '.')}:{_max.ToString().Replace(',', '.')}";

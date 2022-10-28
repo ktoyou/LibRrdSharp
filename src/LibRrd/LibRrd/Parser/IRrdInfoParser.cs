@@ -1,6 +1,6 @@
 namespace LibRrd.Parser;
 
-public interface IRrdInfoParser
+public interface IRrdInfoParser : IParser<RRD>
 { 
     RRD Parse();
 }

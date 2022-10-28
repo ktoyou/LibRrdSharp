@@ -21,5 +21,5 @@ public class Line : IShape
         _value = value;
     }
 
-    public override string ToString() => $"LINE{Thickness}:{_value.Name}#{Color.R.ToString("X2") + Color.G.ToString("X2") + Color.B.ToString("X2")}:{Legend}";
+    public override string ToString() => $"LINE{Thickness}:{_value.Name}#{Color.R.ToString("X2") + Color.G.ToString("X2") + Color.B.ToString("X2")}:\"{Legend}\"";
 }

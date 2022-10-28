@@ -64,13 +64,13 @@ void RenderGraph()
     graph.Legend.Add(new Comment("Min".PadLeft(8)));
     graph.Legend.Add(new Comment("Max\\n".PadLeft(9)));
     
-    graph.Legend.Add(new Line(graph.Defs.First(elem => elem.Name == "load_def"), Color.Brown, 1, "CpuLoad"));
+    graph.Legend.Add(new Line(graph.Defs.First(elem => elem.Name == "load_def"), Color.Brown, 1, "Cpu load"));
     graph.Legend.Add(new Gprint(graph.Defs.First(elem => elem.Name == "load_def"), RraType.LAST, "%6.2lf %%".PadLeft(15)));
     graph.Legend.Add(new Gprint(graph.Defs.First(elem => elem.Name == "load_def"), RraType.AVERAGE, "%6.2lf %%"));
     graph.Legend.Add(new Gprint(graph.Defs.First(elem => elem.Name == "load_def"), RraType.MIN, "%6.2lf %%"));
     graph.Legend.Add(new Gprint(graph.Defs.First(elem => elem.Name == "load_def"), RraType.MAX, "%6.2lf %%\\n"));
     
-    graph.Legend.Add(new Line(graph.Defs.First(elem => elem.Name == "memory_def"), Color.Goldenrod, 1, "AvailableMemory"));
+    graph.Legend.Add(new Line(graph.Defs.First(elem => elem.Name == "memory_def"), Color.Goldenrod, 1, "Available memory"));
     graph.Legend.Add(new Gprint(graph.Defs.First(elem => elem.Name == "memory_def"), RraType.LAST, "%6.2lf GB"));
     graph.Legend.Add(new Gprint(graph.Defs.First(elem => elem.Name == "memory_def"), RraType.AVERAGE, "%6.2lf GB"));
     graph.Legend.Add(new Gprint(graph.Defs.First(elem => elem.Name == "memory_def"), RraType.MIN, "%6.2lf GB"));

@@ -19,5 +19,5 @@ public class Area : IShape
     }
 
     public override string ToString() => 
-        $"AREA:{_value.Name}#{Color.R.ToString("X2") + Color.G.ToString("X2") + Color.B.ToString("X2")}:{Legend}";
+        $"AREA:{_value.Name}#{Color.R.ToString("X2") + Color.G.ToString("X2") + Color.B.ToString("X2")}:\"{Legend}\"";
 }

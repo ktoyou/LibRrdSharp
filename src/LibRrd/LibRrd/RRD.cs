@@ -2,7 +2,6 @@ using LibRrd.Archive;
 using LibRrd.Commands;
 using LibRrd.Commands.Configurators;
 using LibRrd.DataSources;
-using LibRrd.Graph;
 using LibRrd.Parser;
 
 namespace LibRrd;
@@ -12,6 +11,8 @@ namespace LibRrd;
 /// </summary>
 public class RRD
 {
+    #region Fields
+    
     public static string RRD_PATH = "rrdtool.exe";
 
     public IEnumerable<IDataSource> DataSources { get; }
@@ -22,6 +23,8 @@ public class RRD
 
     public int Step { get; }
 
+    #endregion
+    
     public RRD(string filename, int step, IEnumerable<IDataSource> dataSources, IEnumerable<IRraArchive> rraArchives)
     {
         FileName = filename;
@@ -30,6 +33,13 @@ public class RRD
         RraArchives = rraArchives;
     }
 
+
+    #region Sync Methods
+
+    /// <summary>
+    /// Дамп базы данных.
+    /// </summary>
+    /// <returns>Строку с дампом.</returns>
     public string? Dump()
     {
         var command = new CommandExecutor().ExecuteCommand(RRD_PATH, new DumpRrdConfigurator(FileName));
@@ -68,7 +78,6 @@ public class RRD
         return new RRD(filename, step, dataSources, rraArchives);
     }
 
-    
     /// <summary>
     /// Возвращает объект базы данных RRD для последующей работы с ней.
     /// </summary>
@@ -93,4 +102,41 @@ public class RRD
     /// <param name="rraType">Тип архива.</param>
     /// <returns>Архив.</returns>
     public IRraArchive? GetRraArchive(RraType rraType) => RraArchives.FirstOrDefault(rra => rra.RraType == rraType);
+
+    #endregion
+
+    #region Async Methods
+
+    /// <summary>
+    /// Получение последних данных об обновлении базы. Возвращает время последнего обновления. Для получения значений,
+    /// нужно обратиться к полю LastValue класса унаследованного от IDataSource 
+    /// </summary>
+    /// <returns></returns>
+    public async Task<DateTime> LastUpdateAsync() => await Task.Run(() => LastUpdate());
+    
+    /// <summary>
+    /// Создание базы данных.
+    /// </summary>
+    /// <param name="filename">Путь для сохранения базы данных.</param>
+    /// <param name="step">Шаг.</param>
+    /// <param name="dataSources">Источники данных (DS).</param>
+    /// <param name="rraArchives">Архивы данных (RRA).</param>
+    /// <returns>База данных RRD</returns>
+    public static async Task<RRD> CreateAsync(string filename, int step, IEnumerable<IDataSource> dataSources,
+        IEnumerable<IRraArchive> rraArchives) => await Task.Run(() => Create(filename, step, dataSources, rraArchives));
+
+    /// <summary>
+    /// Возвращает объект базы данных RRD для последующей работы с ней.
+    /// </summary>
+    /// <param name="filename">Путь до базы данных.</param>
+    /// <returns></returns>
+    public static async Task<RRD> LoadAsync(string filename) => await Task.Run(() => Load(filename));
+
+    /// <summary>
+    /// Дамп базы данных.
+    /// </summary>
+    /// <returns>Строку с дампом.</returns>
+    public async Task<string?> DumpAsync() => await Task.Run(() => Dump());
+
+    #endregion
 }

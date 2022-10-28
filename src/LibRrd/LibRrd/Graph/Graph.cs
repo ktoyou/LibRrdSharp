@@ -58,6 +58,10 @@ public class Graph : IGraph
         Defs = new List<Def>();
         Cdefs = new List<Cdef>();
         Legend = new List<ILegend>();
+        VerticalLabel = string.Empty;
+        Watermark = string.Empty;
+        File = string.Empty;
+        Title = string.Empty;
     }
 
 #if _WINDOWS

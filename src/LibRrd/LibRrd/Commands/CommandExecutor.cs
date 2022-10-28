@@ -9,7 +9,7 @@ public class CommandExecutor
     {
         var command = new Command(filename, configurator.Configure());
         command.Execute();
-        if (command.ErrorOutput != string.Empty) throw new RrdException(command.ErrorOutput);
+        if (command.ErrorOutput != string.Empty) throw new RrdException(command.ErrorOutput!);
         return command;
     } 
 }

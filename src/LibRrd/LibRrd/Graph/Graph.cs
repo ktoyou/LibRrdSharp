@@ -79,4 +79,30 @@ public class Graph : IGraph
     /// Сгенерировать график.
     /// </summary>
     public void Render() => new CommandExecutor().ExecuteCommand(RRD.RRD_PATH, new GenerateRrdGraphCommandConfigurator(this));
+
+    public override string ToString()
+    {
+        var command = $"graph {File} " +
+                      $"-s {((DateTimeOffset)Start).ToUnixTimeSeconds()} " +
+                      $"-e {((DateTimeOffset)End).ToUnixTimeSeconds()} " +
+                      $"-w {Width} -h {Height} -t \"{Title}\"";
+        
+        if (NoGridFit) command += " -N";
+        if (!XAxis) command += " --x-grid none";
+        if (!YAxis) command += " --y-grid none";
+        if (!EnabledLegend) command += " --no-legend";
+        if (Watermark != string.Empty) command += $" --watermark \"{Watermark}\"";
+
+        if (DefaultFont != null) command += $" {DefaultFont}";
+        if (TitleFont != null) command += $" {TitleFont}";
+        if (WatermarkFont != null) command += $" {WatermarkFont}";
+
+        command += $" --imgformat {ImgFormat.ToString().ToUpper()}";
+        
+        Defs.ForEach(elem => command += $" {elem}");
+        Cdefs.ForEach(elem => command += $" {elem}");
+        Legend.ForEach(elem => command += $" {elem}");
+
+        return command;
+    }
 }

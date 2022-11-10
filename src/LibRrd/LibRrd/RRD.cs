@@ -13,14 +13,29 @@ public class RRD
 {
     #region Fields
     
+    /// <summary>
+    /// Путь до исполняемого файла rrdtool
+    /// </summary>
     public static string RRD_PATH = "rrdtool.exe";
 
+    /// <summary>
+    /// Источники данных (DS)
+    /// </summary>
     public IEnumerable<IDataSource> DataSources { get; }
 
+    /// <summary>
+    /// Архивы данных (RRA)
+    /// </summary>
     public IEnumerable<IRraArchive> RraArchives { get; }
 
+    /// <summary>
+    /// Название файла базы данных
+    /// </summary>
     public string FileName { get; }
 
+    /// <summary>
+    /// Шаг между данными в секундах
+    /// </summary>
     public int Step { get; }
 
     #endregion
@@ -137,6 +152,13 @@ public class RRD
     /// </summary>
     /// <returns>Строку с дампом.</returns>
     public async Task<string?> DumpAsync() => await Task.Run(() => Dump());
+
+    /// <summary>
+    /// Обновление источников данных (DS). Обновлять значения в том порядке, в каком идут источники данных.
+    /// </summary>
+    /// <param name="values">Значения для источников данных (DS).</param>
+    /// <param name="dateTime">Время обновления.</param>
+    public async Task UpdateAsync(IEnumerable<double> values, DateTime dateTime) => await Task.Run(() => Update(values, dateTime));
 
     #endregion
 }

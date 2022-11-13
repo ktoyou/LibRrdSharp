@@ -80,6 +80,15 @@ public class RRD
     }
 
     /// <summary>
+    /// Восстанавливает базу данных из файла XML
+    /// </summary>
+    /// <param name="xmlFilename">Путь до XML файла</param>
+    /// <param name="rrdFileName">Путь для сохранения восстановленной базы</param>
+    /// <param name="rangeCheck">Убедитесь, что значения в RRA не превышают пределы, определенные для различных источников данных</param>
+    public static void RestoreFromXml(string xmlFilename, string rrdFileName, bool rangeCheck = true) =>
+        new CommandExecutor().ExecuteCommand(RRD_PATH, new RestoreRrdCommandConfigurator(xmlFilename, rrdFileName, rangeCheck));
+
+    /// <summary>
     /// Создание базы данных.
     /// </summary>
     /// <param name="filename">Путь для сохранения базы данных.</param>
@@ -159,6 +168,15 @@ public class RRD
     /// <param name="values">Значения для источников данных (DS).</param>
     /// <param name="dateTime">Время обновления.</param>
     public async Task UpdateAsync(IEnumerable<double> values, DateTime dateTime) => await Task.Run(() => Update(values, dateTime));
+
+    /// <summary>
+    /// Восстанавливает базу данных из файла XML
+    /// </summary>
+    /// <param name="xmlFilename">Путь до XML файла</param>
+    /// <param name="rrdFileName">Путь для сохранения восстановленной базы</param>
+    /// <param name="rangeCheck">Убедитесь, что значения в RRA не превышают пределы, определенные для различных источников данных</param>
+    public async Task RestoreFromXmlAsync(string xmlFilename, string rrdFileName, bool rangeCheck = true) =>
+        await Task.Run(() => RestoreFromXml(xmlFilename, rrdFileName, rangeCheck));
 
     #endregion
 }

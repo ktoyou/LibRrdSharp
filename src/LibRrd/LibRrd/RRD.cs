@@ -175,7 +175,7 @@ public class RRD
     /// <param name="xmlFilename">Путь до XML файла</param>
     /// <param name="rrdFileName">Путь для сохранения восстановленной базы</param>
     /// <param name="rangeCheck">Убедитесь, что значения в RRA не превышают пределы, определенные для различных источников данных</param>
-    public async Task RestoreFromXmlAsync(string xmlFilename, string rrdFileName, bool rangeCheck = true) =>
+    public static async Task RestoreFromXmlAsync(string xmlFilename, string rrdFileName, bool rangeCheck = true) =>
         await Task.Run(() => RestoreFromXml(xmlFilename, rrdFileName, rangeCheck));
 
     #endregion
